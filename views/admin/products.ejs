@@ -1,0 +1,331 @@
+<%- include("../../views/partials/admin/header") %>
+
+<style>
+    .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.page-item {
+    margin: 0 5px;
+}
+
+.page-link {
+    text-decoration: none;
+    padding: 8px 12px;
+    color: #007bff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.page-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+}
+
+</style>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+</head>
+
+<div class="content-header">
+    <div>
+        <h2 class="content-title card-title">Products</h2>
+    </div>
+</div>
+
+<header class="card-header text-center mb-20" style="margin-left: 30%;">
+    <form action="/admin/product-varinats" method="get" class="d-inline">
+        
+    </form>
+</header>
+
+<div class="right mt-5" style="margin-left: 20%;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"><b>#</b></th>
+                <th scope="col"><b>Product Image</b></th>
+                <th scope="col"><b>Product Name</b></th>
+                <th scope="col"><b>Category</b></th>
+                <th scope="col"><b>Sale Price</b></th>
+                <th scope="col"><b>RegularPrice</b></th>
+                <th scope="col"><b>OfferPrice</b></th>
+                <th scope="col"><b>Offer</b></th>
+                
+                <th scope="col"><b>Actions</b></th>
+                <th scope="col"><b>Edit</b></th>
+                <th scope="col"><b>varinats</b></th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <% data.forEach((product, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <!-- Display Product Image -->
+                    <td>
+                        <img src="http://localhost:3000<%= product.productImage[0] %>" 
+                             alt="<%= product.productName %>" 
+                             style="width: 50px; height: 50px; object-fit: cover;">
+                    </td>
+        
+                    <!-- Display Product Name -->
+                    <td><%= product.productName %></td>
+                    
+                    <!-- Display Category Name -->
+                    <td><%= product.category.name %></td>
+                    
+                    <!-- Display Sale Price -->
+                    <td><%= product.salePrice %></td>
+                    <td><%= product.regularPrice%></td>
+                    
+                 <!-- Display Product Offer Price -->
+
+
+<!-- Display Product Offer Percentage -->
+<!-- Display Product Offer Percentage -->
+<td>
+    <% if (product.productOffer) { %>
+        <%= product.productOffer %>%
+    <% } else { %>
+        0%
+    <% } %>
+</td>
+
+<!-- Add/Remove Offer Buttons -->
+<td>
+    <% if (!product.productOffer || product.productOffer === 0) { %>
+        <!-- If no offer or 0% offer, show Add Offer button -->
+        <button class="btn btn-info" style="width: 80px;">
+            <a href="#" class="text-white" style="text-decoration: none;" onclick="AddOffer('<%= product._id %>')">Add Offer</a>
+        </button>
+    <% } else { %>
+        <!-- If an offer is present, show Remove Offer button -->
+        <button class="btn btn-danger" style="width: 80px;">
+            <a href="#" class="text-white" style="text-decoration: none;" onclick="removeOffer('<%= product._id %>')">Remove Offer</a>
+        </button>
+    <% } %>
+</td>
+
+
+                    
+                    
+                    
+        
+                    <!-- Actions -->
+                    <td>
+                        <% if (product.isBlocked === false) { %>
+                            <button class="btn btn-danger" style="width: 80px;">
+                                <a href="/admin/blockProduct?id=<%= product._id %>&page=<%= currentPage %>" 
+                                   class="text-white" 
+                                   style="text-decoration: none;">Block</a>
+                            </button>
+                        <% } else { %>
+                            <button class="btn btn-success" style="width: 80px;">
+                                <a href="/admin/unblockProduct?id=<%= product._id %>&page=<%= currentPage %>" 
+                                   class="text-white" 
+                                   style="text-decoration: none;">Unblock</a>
+                            </button>
+                        <% } %>
+                    </td>
+        
+                    <!-- Edit Button -->
+                    <td>
+                        <a href="/admin/editProduct?id=<%= product._id %>" 
+                           class="btn btn-info text-white" 
+                           style="width: 80px; text-decoration: none;">Edit</a>
+                    </td>
+                    <td>
+                        <a href="/admin/product-variants?id=<%= product._id %>" 
+                           class="btn btn-info text-white" 
+                           style="width: 80px; text-decoration: none;">view varinats</a>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+
+<!-- Pagination Section -->
+<div class="pagination-container">
+    <ul class="pagination">
+        <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= (i === currentPage) ? 'active' : '' %>">
+                <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+            </li>
+        <% } %>
+
+        <% if (currentPage > 1) { %>
+            <li class="page-item">
+                <a class="page-link" href="?page=<%= currentPage - 1 %>">Previous</a>
+            </li>
+        <% } %>
+
+        <% if (currentPage < totalPages) { %>
+            <li class="page-item">
+                <a class="page-link" href="?page=<%= currentPage + 1 %>">Next</a>
+            </li>
+        <% } %>
+    </ul>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+    // Block button confirmation
+    $(document).on('click', '.btn-danger', function(e) {
+        e.preventDefault();
+        const url = $(this).find('a').attr('href'); // Get the URL of the action
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, block it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url; // Redirect to the block URL if confirmed
+            }
+        });
+    });
+
+    // Unblock button confirmation
+    $(document).on('click', '.btn-success', function(e) {
+        e.preventDefault();
+        const url = $(this).find('a').attr('href'); // Get the URL of the action
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to unblock this product!",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, unblock it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url; // Redirect to the unblock URL if confirmed
+            }
+        });
+    });
+
+
+
+
+    async function AddOffer(productId) {
+        console.log("offer",productId);
+        
+    const { value: amount } = await Swal.fire({
+        title: 'Offer in Percentage',
+        input: 'number',
+        inputLabel: 'Percentage',
+        inputPlaceholder: '%',
+        inputValidator: (value) => {
+            if (!value || isNaN(value) || value < 0 || value > 100) {
+                return 'Please enter a valid percentage between 0 and 100!';
+            }
+        },
+    });
+
+    if (amount) {
+        $.ajax({
+            url: '/admin/addProductOffer',
+            method: 'POST',
+            data: { percentage: amount, productId: productId },
+            success: (response) => {
+                console.log("data is here",response);
+                
+                if (response.status === true) {
+                    Swal.fire('Offer Added', 'The offer has been successfully added.', 'success').then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire('Failed', 'Failed to add the offer.', 'error');
+                }
+                
+                
+            },
+            error: (err) => {
+                console.error('Error:', err);
+                Swal.fire('Error', 'Something went wrong.', 'error');
+            },
+        });
+    }
+}
+
+  
+
+
+
+
+async function removeOffer(productId) {
+    console.log("Attempting to remove offer for productId:", productId); // Debugging step
+
+    // Swal.fire({
+    //     title: 'Remove Offer',
+    //     text: 'Are you sure you want to remove this offer?',
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#3085d6',
+    //     cancelButtonColor: '#d33',
+    //     confirmButtonText: 'Yes, remove it!',
+    // }).then((result) => {
+        console.log('jkjkjkjjkjkj')
+        // if (result.isConfirmed) {
+            console.log('ooooooo')
+            $.ajax({
+                url: '/admin/removeProductOffer',
+                method: 'POST',
+                data: { productId: productId },
+                success: (response) => {
+                    console.log("Response from server:", response);  // Debugging response
+
+                    if (response.status === true) {
+                        Swal.fire('Removed', 'The offer has been successfully removed.', 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Failed', response.message || 'Failed to remove the offer.', 'error');
+                    }
+                },
+                error: (err) => {
+                    console.error('Error:', err); // Debugging error
+                    Swal.fire('Error', 'Something went wrong. Please try again later.', 'error');
+                },
+            });
+        // }
+    // });
+}
+
+</script>
+
+<%- include("../../views/partials/admin/footer") %>

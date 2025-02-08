@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Wallet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      color: #333;
+    }
+    .balance {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 24px;
+      color: #4caf50;
+      font-weight: bold;
+    }
+    .transactions {
+      margin-top: 30px;
+    }
+    .transactions h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .transaction-list {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .transaction-list th,
+    .transaction-list td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    .transaction-list th {
+      background: #f8f8f8;
+    }
+    .credit {
+      color: #4caf50;
+      font-weight: bold;
+    }
+    .debit {
+      color: #f44336;
+      font-weight: bold;
+    }
+    .no-transactions {
+      text-align: center;
+      color: #999;
+      margin: 20px 0;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      color: #fff;
+      background: #4caf50;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      text-align: center;
+    }
+    .btn:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Wallet Header -->
+    <div class="header">
+      <h1>My Wallet</h1>
+    </div>
+
+    <!-- Wallet Balance -->
+    <div class="balance">
+      Wallet Balance: ₹<%= wallet.balance.toFixed(2) %> <!-- Ensure balance is formatted as a number with two decimals -->
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="transactions">
+      <h2>Recent Transactions</h2>
+      <% if (wallet.transactions.length > 0) { %>
+        <table class="transaction-list">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% wallet.transactions.forEach(transaction => { %>
+              <tr>
+                <td><%= new Date(transaction.date).toLocaleDateString() %></td>
+                <td><%= transaction.description || 'No description' %></td> <!-- Handle missing descriptions -->
+                <td>₹<%= transaction.amount.toFixed(2) %></td> <!-- Format transaction amount -->
+                <td class="<%= transaction.type === 'credit' ? 'credit' : 'debit' %>">
+                  <%= transaction.type === 'credit' ? 'Credit' : 'Debit' %>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p class="no-transactions">No transactions available</p>
+      <% } %>
+    </div>
+
+    <!-- Back Button -->
+    <a href="/profile" class="btn">Back to Profile</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<%- include("../partials/admin/header") %>
+<section class="content-main" style="margin-left: 20%;" >
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Dashboard</h2>
+            <p>Whole data about your business here</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card card-body mb-4">
+                <article class="icontext">
+                    <span class="icon icon-sm rounded-circle bg-primary-light">
+                        <i class="text-primary material-icons md-monetization_on"></i>
+                    </span>
+                    <div class="text">
+                        <h6 class="mb-1 card-title">Total Revenue</h6>
+                        <span id="totalRevenue"></span>
+                        <span class="text-sm">Shipping fees not included</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card card-body mb-4">
+                <article class="icontext">
+                    <span class="icon icon-sm rounded-circle bg-success-light">
+                        <i class="text-success material-icons md-local_shipping"></i>
+                    </span>
+                    <div class="text">
+                        <h6 class="mb-1 card-title">Total Orders</h6>
+                        <span id="totalOrders"></span>
+                        <span class="text-sm">Excluding orders in transit</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card card-body mb-4">
+                <article class="icontext">
+                    <span class="icon icon-sm rounded-circle bg-warning-light">
+                        <i class="text-warning material-icons md-qr_code"></i>
+                    </span>
+                    <div class="text">
+                        <h6 class="mb-1 card-title">Total Products</h6>
+                        <span id="totalProducts"></span>
+                        <span class="text-sm">In categories</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card card-body mb-4">
+                <article class="icontext">
+                    <span class="icon icon-sm rounded-circle bg-info-light">
+                        <i class="text-info material-icons md-shopping_basket"></i>
+                    </span>
+                    <div class="text">
+                        <h6 class="mb-1 card-title">Total Users</h6>
+                        <span id="totalUsers"></span>
+                        <span class="text-sm">Based on local time</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="chart-container p-4 bg-white rounded-lg shadow">
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <h5 class="card-title mb-0">Sales Analytics</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center">
+                            <!-- Period Filter -->
+                            <div class="btn-group filter-period mr-3" role="group">
+                                <button type="button" class="btn btn-outline-primary active" data-period="monthly">Monthly</button>
+                                <button type="button" class="btn btn-outline-primary" data-period="yearly">Yearly</button>
+                            </div>
+    
+                            <!-- Searchable Year Input -->
+                            <input type="number" id="yearSearch" class="form-control ml-2" style="width: 120px;" 
+                                   placeholder="Enter Year" min="2000" max="2099" step="1">
+    
+                            <!-- Date Filters -->
+                           <!-- Date Filters -->
+<div class="d-flex align-items-center ml-2">
+    <label for="start_date" class="mr-2">From:</label>
+    <input type="date" name="start_date" id="start_date" class="form-control mr-2" aria-label="Start date">
+    
+    <label for="end_date" class="mr-2">To:</label>
+    <input type="date" name="end_date" id="end_date" class="form-control" aria-label="End date">
+
+    <!-- Apply Date Range Button -->
+    <button id="applyDateRange" class="btn btn-outline-primary ml-2">Apply</button>
+</div>
+
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Chart -->
+                <div style="height: 300px; position: relative;">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-fluid p-4">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">Top 10 Products</div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="topProductsTable">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Product</th>
+                                    <th>Sales</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                                    <tr>
+                                        <td></td> 
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">Top 10 Categories</div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="topCategoriesTable">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Category</th>
+                                   
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    <tr>
+                                        <td></td> 
+                                        <td></td>
+                                        
+                                        
+                                    </tr>
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/path/to/dashboard.js"></script>
+
+<%- include("../partials/admin/footer") %>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    fetchDashboardStats();
+});
+
+async function fetchDashboardStats() {
+    try {
+        const response = await fetch("/admin/dashboard-stats");
+        const data = await response.json();
+
+        document.getElementById("totalRevenue").innerText = `$${data.totalRevenue.toLocaleString()}`;
+        document.getElementById("totalOrders").innerText = data.totalOrders;
+        document.getElementById("totalProducts").innerText = data.totalProducts;
+        document.getElementById("totalUsers").innerText = data.totalUsers;
+    } catch (error) {
+        console.error("Error fetching dashboard stats:", error);
+    }
+}
+
+
+async function fetchSalesAnalytics(period = "monthly", year = new Date().getFullYear(), startDate = "", endDate = "") {
+    try {
+        let url = `/admin/sales-analytics?period=${period}&year=${year}`;
+        
+        // If custom dates are provided, add them to the URL
+        if (startDate && endDate) {
+            url += `&startDate=${startDate}&endDate=${endDate}`;
+        }
+
+        const response = await fetch(url);
+        const salesData = await response.json();
+
+        const labels = salesData.map(item => `${item._id.month}/${item._id.year}`);
+        const sales = salesData.map(item => item.totalSales);
+
+        const ctx = document.getElementById("salesChart").getContext("2d");
+
+        // Destroy the previous chart instance if it exists
+        if (window.salesChart && typeof window.salesChart.destroy === "function") {
+            window.salesChart.destroy(); // Properly destroy the existing chart
+        }
+
+        // Create the new Chart.js instance
+        window.salesChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels,
+                datasets: [{
+                    label: "Sales Revenue",
+                    data: sales,
+                    borderColor: "#dc3545",
+                    backgroundColor: "#003366",
+                    borderWidth: 3,
+                    fill: true,
+                    pointRadius: 5,
+                    tension: 0.4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: "#333" } },
+                    y: { grid: { borderDash: [5, 5], color: "rgba(0, 0, 0, 0.1)" }, ticks: { color: "#333" } },
+                }
+            }
+        });
+
+    } catch (error) {
+        console.error("Error fetching sales analytics:", error);
+    }
+}
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const filterButtons = document.querySelectorAll(".filter-period button");
+    const yearInput = document.getElementById("yearSearch");
+    const applyDateRangeButton = document.getElementById("applyDateRange");
+    const startDateInput = document.getElementById("start_date");
+    
+    const endDateInput = document.getElementById("end_date");
+
+    let selectedPeriod = "monthly";
+    let selectedYear = new Date().getFullYear();
+    let customStartDate = "";
+    let customEndDate = "";
+
+    // Handle period selection (monthly, yearly)
+    filterButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            filterButtons.forEach(btn => btn.classList.remove("active"));
+            this.classList.add("active");
+            selectedPeriod = this.dataset.period;
+            fetchSalesAnalytics(selectedPeriod, selectedYear, customStartDate, customEndDate);
+        });
+    });
+
+    // Handle year input change
+    yearInput.addEventListener("change", function () {
+        selectedYear = this.value;
+        fetchSalesAnalytics(selectedPeriod, selectedYear, customStartDate, customEndDate);
+    });
+
+    // Handle apply custom date range button click
+    applyDateRangeButton.addEventListener("click", function () {
+        customStartDate = startDateInput.value;
+        customEndDate = endDateInput.value;
+
+        // Only fetch sales data if both start and end dates are provided
+        if (customStartDate && customEndDate) {
+            fetchSalesAnalytics(selectedPeriod, selectedYear, customStartDate, customEndDate);
+        } else {
+            alert("Please select both start and end dates.");
+        }
+    });
+
+    // Fetch initial data
+    fetchSalesAnalytics(selectedPeriod, selectedYear, customStartDate, customEndDate);
+});
+
+
+
+// app.js
+
+// Fetch top products data from the backend
+async function fetchTopProducts() {
+  try {
+    const response = await fetch("/admin/top-products"); // Adjust the API endpoint accordingly
+    const products = await response.json();
+    
+    if (products.success) {
+      const tableBody = document.querySelector("#topProductsTable tbody");
+      tableBody.innerHTML = ""; // Clear any existing data
+
+      // Loop through the products and create rows in the table
+      products.topProducts.forEach((product, index) => {
+        tableBody.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${product.productName}</td>
+            <td>${product.sales}</td>
+             </tr>
+        `;
+      });
+    } else {
+      alert("No products found.");
+    }
+  } catch (error) {
+    console.error("Error fetching top products:", error);
+  }
+}
+
+// Call the function to fetch and display top products on page load
+fetchTopProducts();
+
+
+async function fetchTopCategories() {
+    try {
+        const response = await fetch("/admin/top-categories");
+        const data = await response.json();  // Get the response and store it in 'data'
+        console.log('category', data);  // Check the structure of the data
+        
+        // Make sure the response includes success and data array
+        if (data.success) {
+            const tableBody = document.querySelector("#topCategoriesTable tbody");
+            tableBody.innerHTML = "";  // Clear any existing rows
+            
+            // Loop through the categories in 'data' and display them in the table
+            data.data.forEach((category, index) => {
+                console.log("category", category, index);  // Log category and index
+                
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${category.categoryName}</td>
+                    
+                    </tr>
+                `;
+            });
+        } else {
+            console.log("No categories found.");
+            alert("No categories found.");
+        }
+    } catch (error) {
+        console.error("Error fetching top categories:", error);
+    }
+}
+
+// Call the function when the page is loaded
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetchTopProducts();
+    fetchTopCategories();
+});
+
+
+
+
+</script>

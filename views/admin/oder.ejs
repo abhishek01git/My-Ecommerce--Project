@@ -1,0 +1,130 @@
+<%- include("../../views/partials/admin/header") %>
+<style>
+    .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-link {
+  padding: 8px 16px;
+  margin: 0 5px;
+  background-color: #f0f0f0;
+  border-radius: 25px; /* Rounded corners */
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.pagination-link:hover {
+  background-color: #29921c;
+  color: white;
+}
+
+.pagination-link.active {
+  background-color: #29921c;
+  color: white;
+}
+
+.pagination-link:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+</style>
+<main class="content-main" style="margin-left: 15%;">
+    <section class="content-main">
+        <div class="content-header">
+            <h2 class="content-title">Sales Report</h2>
+        </div>
+    
+        <!-- Report Filter Form -->
+       
+        <!-- Orders Table -->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% orders.forEach(order => { %>
+                                <tr>
+                                    <td><%= order.orderId %></td>
+                                    <td><%= order.userId.name %></td>
+                                    <td><%= order.userId.email %></td>
+                                    <td>$<%= order.totalAmount.toFixed(2) %></td>
+                                    <td><span class="badge rounded-pill alert-warning"><%= order.status %></span></td>
+                                    <td><%= order.createdAt.toDateString() %></td>
+                                    <td class="text-end">
+                                        <a href="/admin/orders/<%= order._id %>" class="btn btn-sm btn-primary">Details</a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <!-- Previous Button -->
+                    <% if (currentPage > 1) { %>
+                      <a href="/admin/orders?page=<%= currentPage - 1 %>" class="pagination-link">Previous</a>
+                    <% } %>
+                  
+                    <!-- Page Number Links (Display 5 pages at a time) -->
+                    <% 
+                      const startPage = Math.max(1, currentPage - 2); // Start 2 pages before the current one
+                      const endPage = Math.min(totalPages, currentPage + 2); // End 2 pages after the current one
+                    %>
+                  
+                    <% for (let i = startPage; i <= endPage; i++) { %>
+                      <a href="/admin/orders?page=<%= i %>" class="pagination-link <%= currentPage === i ? 'active' : '' %>">
+                        <%= i %>
+                      </a>
+                    <% } %>
+                  
+                    <!-- Next Button -->
+                    <% if (currentPage < totalPages) { %>
+                      <a href="/admin/orders?page=<%= currentPage + 1 %>" class="pagination-link">Next</a>
+                    <% } %>
+                  </div>
+                  
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="main-footer font-xs">
+    <div class="row pb-30 pt-15">
+        <div class="col-sm-6">
+            <script>
+                document.write(new Date().getFullYear());
+            </script>
+            &copy; Nest - HTML Ecommerce Template.
+        </div>
+        <div class="col-sm-6">
+            <div class="text-sm-end">All rights reserved</div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
+<script src="assets/js/vendors/bootstrap.bundle.min.js"></script>
+<script src="assets/js/vendors/select2.min.js"></script>
+<script src="assets/js/vendors/perfect-scrollbar.js"></script>
+<script src="assets/js/vendors/jquery.fullscreen.min.js"></script>
+<script src="assets/js/main.js?v=1.1" type="text/javascript"></script>
+</body>
+</html>

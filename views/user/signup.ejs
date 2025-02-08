@@ -1,0 +1,273 @@
+<%- include("../partials/user/header") %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
+
+    .signup-container {
+      max-width: 400px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .signup-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .signup-header h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .signup-header p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 12px;
+      display: none;
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      color: #ffffff;
+      background-color: #e50c66;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .signup-btn:hover {
+      background-color: #010912;
+    }
+
+    .google-btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      color: #e2dada;
+      background-color:  #e50c66;
+      border: 1px solid #c0c0bc;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .google-btn:hover {
+      background-color:#010912;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <div class="signup-header">
+      <h2>Create an Account</h2>
+      <p>Register here if you are a new customer</p>
+    </div>
+
+   
+
+    <form id="signform" method="POST" action="/signup">
+      <div class="form-group">
+        <label for="name">Username</label>
+        <input id="name" name="name" type="text" placeholder="Enter your name">
+        <div id="error1" class="error-message"></div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input id="email" name="email" type="email" placeholder="Enter your email">
+        <div id="error2" class="error-message"></div>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="text" placeholder="Enter your phone number">
+        <div id="error3" class="error-message"></div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="Enter your password">
+        <div id="error4" class="error-message"></div>
+      </div>
+      <div class="form-group">
+        <label for="confirm_password">Confirm Password</label>
+        <input id="confirm_password" name="confirm_password" type="password" placeholder="Confirm your password">
+        <div id="error5" class="error-message"></div>
+      </div>
+      <%if(locals.message && message.length>0){%>
+        <div class="alert alert-danger text-center">
+    <%=message%>
+        </div>
+        <%}%>
+      <button type="submit" class="signup-btn">Submit & Register</button>
+    </form>
+    <br>
+    <a href="/auth/google" class="google-btn">Sign up with Google</a>
+
+
+    <!-- Already Have an Account Link -->
+    <div class="login-link">
+      Already have an account? <a href="/login">Login</a>
+    </div>
+  </div>
+
+  <script>
+    const nameid = document.getElementById('name');
+    const emailid = document.getElementById('email');
+    const phoneid = document.getElementById('phone');
+    const passwordid = document.getElementById('password');
+    const cpassid = document.getElementById('confirm_password');
+    const error1 = document.getElementById('error1');
+    const error2 = document.getElementById('error2');
+    const error3 = document.getElementById('error3');
+    const error4 = document.getElementById('error4');
+    const error5 = document.getElementById('error5');
+    const signform = document.getElementById('signform');
+
+    function namevalidateChecking() {
+      const nameval = nameid.value.trim();
+      const namepattern = /^[A-Za-z\s]+$/;
+      if (nameval === "") {
+        error1.style.display = "block";
+        error1.innerHTML = "Please enter a valid name";
+      } else if (!namepattern.test(nameval)) {
+        error1.style.display = "block";
+        error1.innerHTML = "Name can only contain alphabets and spaces";
+      } else {
+        error1.style.display = "none";
+        error1.innerHTML = "";
+      }
+    }
+
+    function emailvalidateChecking() {
+      const emailval = emailid.value.trim();
+      const emailpattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (!emailpattern.test(emailval)) {
+        error2.style.display = "block";
+        error2.innerHTML = "Invalid email format";
+      } else {
+        error2.style.display = "none";
+        error2.innerHTML = "";
+      }
+    }
+
+    function phonevalidateChecking() {
+      const phonval = phoneid.value.trim();
+      if (phonval === "") {
+        error3.style.display = "block";
+        error3.innerHTML = "Enter a valid phone number";
+      } else if (phonval.length !== 10) {
+        error3.style.display = "block";
+        error3.innerHTML = "Phone number must be 10 digits";
+      } else {
+        error3.style.display = "none";
+        error3.innerHTML = "";
+      }
+    }
+
+    function passwordvalidateChecking() {
+      const passwordval = passwordid.value.trim();
+      const cpasswordval = cpassid.value.trim();
+      const alpha = /[a-zA-Z]/;
+      const digit = /\d/;
+
+      if (passwordval.length < 8) {
+        error4.style.display = "block";
+        error4.innerHTML = "Password should be at least 8 characters";
+      } else if (!alpha.test(passwordval) || !digit.test(passwordval)) {
+        error4.style.display = "block";
+        error4.innerHTML = "Password must contain letters and numbers";
+      } else {
+        error4.style.display = "none";
+        error4.innerHTML = "";
+      }
+
+      if (passwordval !== cpasswordval) {
+        error5.style.display = "block";
+        error5.innerHTML = "Passwords do not match";
+      } else {
+        error5.style.display = "none";
+        error5.innerHTML = "";
+      }
+    }
+
+    function googleLogin() {
+      // Redirect to your Google login route
+      window.location.href = "/auth/google";
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      signform.addEventListener("submit", function (e) {
+        namevalidateChecking();
+        emailvalidateChecking();
+        phonevalidateChecking();
+        passwordvalidateChecking();
+
+        if (
+          error1.innerHTML ||
+          error2.innerHTML ||
+          error3.innerHTML ||
+          error4.innerHTML ||
+          error5.innerHTML
+        ) {
+          e.preventDefault(); // Prevent form submission
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+<%- include("../partials/user/footer") %>

@@ -1,0 +1,100 @@
+<%- include("../../views/partials/user/header") %>
+<style>
+    body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Card style for the form container */
+.card {
+    margin-top: 80px;
+    margin-bottom: 80px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+/* Form Control */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* Styling the input field when there is an error */
+.is-invalid {
+    border-color: #e3342f;
+}
+
+/* Error message */
+.form-text {
+    color: #e3342f;
+    font-size: 14px;
+}
+
+/* Button */
+/* Button */
+.btn-primary {
+    background-color: #e50c66;
+    border: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #010912;
+}
+
+
+.w-100 {
+    width: 100%;
+}
+</style>
+<section class="content-main mt-80 mb-80">
+   <div class="card mx-auto card-login col-4">
+       <div class="card-body">
+           <h4 class="card-title mb-4">Enter New Email</h4>
+           <form method="POST" action="/update-email" onsubmit="return validateEmailForm()">
+               <div class="mb-3">
+                   <input class="form-control" name="newEmail" placeholder="New Email" type="text" id="email">
+                   <div class="error-message" id="email-error"></div>
+               </div>
+               <div class="mb-4">
+                   <button type="submit" class="btn btn-primary w-100">Submit</button>
+               </div>
+           </form>
+       </div>
+   </div>
+</section>
+
+<script>
+   function validateEmailForm() {
+       const emailInput = document.getElementById('email');
+       const emailError = document.getElementById('email-error');
+       const emailValue = emailInput.value.trim();
+       const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+       if (emailValue === '') {
+           emailError.textContent = 'Please enter your new email.';
+           emailInput.classList.add('is-invalid');
+           return false;
+       } else if (!emailValue.match(emailPattern)) {
+           emailError.textContent = 'Please enter a valid email address';
+           emailInput.classList.add('is-invalid');
+           return false;
+       } else {
+           emailError.textContent = '';
+           emailInput.classList.remove('is-invalid');
+           return true;
+       }
+   }
+</script>
+
+<%- include("../../views/partials/user/footer") %>

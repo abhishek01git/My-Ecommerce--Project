@@ -1,0 +1,76 @@
+<%- include("../../views/partials/user/header") %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        .account__wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+        .account__content {
+            width: 100%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .account__details {
+            margin-bottom: 20px;
+        }
+        .account__details--link {
+            display: block;
+            margin-top: 8px;
+        }
+        .account__details--footer {
+            display: flex;
+            justify-content: space-between;
+        }
+        .account__details--footer__btn {
+            padding: 8px 16px;
+            border: none;
+            background-color: #f40574;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .account__details--footer__btn:hover {
+            background-color: #0f0f0f;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="account__wrapper">
+        <div class="account__content">
+            <h3 class="account__content--title mb-20">User Profile</h3>
+            <div class="account__details">
+                <h4 class="account__details--title">Profile Information</h4>
+                <p class="account__details--desc">
+                    <strong>Name:</strong> <%= user.name %> <br>
+                    <strong>Phone:</strong> <%= user.phone %> <br>
+                    <strong>Email:</strong> <%= user.email %>
+                </p>
+                
+            </div>
+            <div class="account__details--footer d-flex">
+                <!-- <a href="/change-email"><button class="account__details--footer__btn" type="button">Change Email</button></a> -->
+                <a href="/change-password"><button class="account__details--footer__btn" type="button">Change Password</button></a>
+            </div>
+        </div>
+    </div>
+    
+
+<%- include("../../views/partials/user/footer") %>
+
+</body>
+</html>

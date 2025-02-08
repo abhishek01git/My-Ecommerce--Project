@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <style>
+        .customer-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .customer-card h5 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .customer-card p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            color: #007bff;
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .pagination a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-block-unblock {
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 3px;
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-block {
+            background-color: #dc3545; /* Red for Block */
+        }
+
+        .btn-unblock {
+            background-color: #28a745; /* Green for Unblock */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Customer Management</h1>
+
+        <!-- Search Form -->
+        <form method="get" action="/admin/customers" class="mb-4">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    name="search" 
+                    class="form-control" 
+                    placeholder="Search by Name or Email" 
+                />
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+
+        <!-- Customer List -->
+        <div class="row">
+            <!-- Example Static Customer Cards -->
+            <div class="col-md-4">
+                <div class="customer-card">
+                    <h5>John Doe</h5>
+                    <p>Email: john.doe@example.com</p>
+                    <p>Status: Active</p>
+                    <!-- Block/Unblock Button -->
+                    <button class="btn btn-block-unblock btn-block" data-status="block" onclick="toggleStatus(this)">Block</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="customer-card">
+                    <h5>Jane Smith</h5>
+                    <p>Email: jane.smith@example.com</p>
+                    <p>Status: Blocked</p>
+                    <!-- Block/Unblock Button -->
+                    <button class="btn btn-block-unblock btn-unblock" data-status="unblock" onclick="toggleStatus(this)">Unblock</button>
+                </div>
+            </div>
+            <!-- Add more customer cards here as needed -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination mt-4">
+            <!-- Static Pagination Links -->
+            <a href="?page=1" class="active">1</a>
+            <a href="?page=2">2</a>
+            <a href="?page=3">3</a>
+        </div>
+    </div>
+
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleStatus(button) {
+            const status = button.getAttribute('data-status');
+            
+            if (status === 'block') {
+                button.textContent = 'Unblock';
+                button.classList.remove('btn-block');
+                button.classList.add('btn-unblock');
+                button.setAttribute('data-status', 'unblock');
+            } else {
+                button.textContent = 'Block';
+                button.classList.remove('btn-unblock');
+                button.classList.add('btn-block');
+                button.setAttribute('data-status', 'block');
+            }
+        }
+    </script>
+</body>
+</html>

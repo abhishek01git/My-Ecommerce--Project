@@ -1,0 +1,240 @@
+<%- include("../../views/partials/admin/header") %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .card-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .content-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .search-input {
+            border-radius: 25px;
+            border: 1px solid #e0e0e0;
+            padding: 10px 20px;
+        }
+
+        .search-input:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-primary {
+            background-color: #28a745;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #218838;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .table {
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .table thead {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(40, 167, 69, 0.05);
+        }
+
+        .table-striped tbody tr:hover {
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+
+        .pagination-container {
+            margin-top: 30px;
+        }
+
+        .pagination-container a,
+        .pagination-container .current-page {
+            padding: 8px 16px;
+            margin: 0 4px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+
+        .pagination-container a:hover {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .pagination-container .current-page {
+            background-color: #28a745;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="card-header" style="margin-left: 20%;">
+        <div class="card">
+            <div class="card-header p-3">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Search Form Section -->
+                        <form id="filter-form" method="get" class="row gy-2 gx-3 align-items-center">
+                           
+                            <div class="col-6 col-md-3 col-lg-2">
+                                <input 
+                                    type="date" 
+                                    name="start_date" 
+                                    id="start_date" 
+                                    class="form-control" 
+                                    aria-label="Start date"
+                                />
+                            </div>
+                            <div class="col-6 col-md-3 col-lg-2">
+                                <input 
+                                    type="date" 
+                                    name="end_date" 
+                                    id="end_date" 
+                                    class="form-control" 
+                                    aria-label="End date"
+                                />
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-2">
+                                <select name="range" id="range" class="form-control">
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="yearly">Yearly</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-2 d-grid">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12 d-flex justify-content-end mt-3">
+                        <!-- Download Buttons -->
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="/admin/download-excel" class="btn btn-success" id="download-excel">Download Excel</a>
+                            <a href="/admin/download-pdf" id="download-PDF" class="btn btn-danger">Download PDF</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="content-main" style="margin-left: 20%;">
+        <div class="content-header">
+            <h2 class="content-title">Sales Report</h2>
+        </div>
+        <div class="right mt-5">
+            <div class="card-header">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#ID</th>
+                                <th>Name</th>
+                                <th>product</th>
+                                <th>quentity</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% orders.forEach(order => { %>
+                                <% order.items.forEach(item => { %>
+                                    <tr>
+                                        <td><%= order.orderId %></td>
+                                        <td><%= order.userId.name %> (<%= order.userId.email %>)</td>
+                                        <td><%= item.productId.productName %></td>
+                                        <td><%= item.quantity %></td>
+                                        <td>$<%= item.price.toFixed(2) %></td>
+                                        <td>
+                                            <% if (order.status === 'Delivered') { %>
+                                                <span class="badge bg-success">Delivered</span>
+                                            <% } else if (order.status === 'canceled') { %>
+                                                <span class="badge bg-danger">Cancelled</span>
+                                            <% } else { %>
+                                                <span class="badge bg-warning">Pending</span>
+                                            <% } %>
+                                        </td>
+                                        <td><%= order.createdAt.toLocaleDateString() %></td>
+                                    </tr>
+                                <% }) %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="pagination-container" style="text-align: center;">
+            
+        </div>
+    </section>
+</body>
+</html>
+<%- include("../../views/partials/admin/footer") %>
+
+<script>
+  document.getElementById("download-PDF").addEventListener("click", function (e) {
+    e.preventDefault();
+    const startDate = document.getElementById("start_date").value;
+    const endDate = document.getElementById("end_date").value;
+    const range = document.getElementById("range").value;
+    let url = "/admin/download-pdf?";
+    if (range) url += `range=${range}`;
+    if (startDate && endDate) url += `&start_date=${startDate}&end_date=${endDate}`;
+    window.location.href = url;
+  });
+</script>

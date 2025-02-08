@@ -1,0 +1,292 @@
+
+<style>
+    .category-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+}
+
+.category-card__thumbnail {
+  height: 300px;
+
+  overflow: hidden;
+}
+
+.category-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.category-card__content {
+  padding: 10px;
+}
+
+.category-card__title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px;
+}
+
+.category-card__description {
+  font-size: 10px;
+  color: #666;
+}
+
+.btn-primary {
+    width: 100px;
+    width: auto;
+  display: inline-block;
+  margin-top: 10px;
+  color: #fff;
+  background-color: #007bff;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+</style>
+
+<%- include("../partials/user/header") %>
+
+
+    
+    
+        <!-- Start slider section -->
+        <section class="hero__slider--section">
+            <div class="hero__slider--inner hero__slider--activation swiper">
+                <div class="hero__slider--wrapper swiper-wrapper">
+                    <div class="swiper-slide ">
+                        <div class="hero__slider--items home1__slider--bg">
+                            <div class="container-fluid">
+                                <div class="hero__slider--items__inner">
+                                    <div class="row row-cols-1">
+                                        <div class="col">
+                                            <div class="slider__content">
+                                                <p class="slider__content--desc desc1 mb-15"><img class="slider__text--shape__icon" src="assets/img/icon/text-shape-icon.png" alt="text-shape-icon"> New Collection</p> 
+                                                <h2 class="slider__content--maintitle h1">The Great Fashion <br>
+                                                    Collection 2022</h2>
+                                                <p class="slider__content--desc desc2 d-sm-2-none mb-40">Up To 40% Off Final Sale Items. <br>
+                                                    Caught in the Moment!</p>    
+                                                <a class="slider__btn primary__btn" href="">Show Collection
+                                                    <svg class="primary__btn--arrow__icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewBox="0 0 6.2 6.2">
+                                                    <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide ">
+                        <div class="hero__slider--items home1__slider--bg two">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="hero__slider--items__inner">
+                                            <div class="slider__content">
+                                                <p class="slider__content--desc desc1 mb-15"><img class="slider__text--shape__icon" src="assets/img/icon/text-shape-icon.png" alt="text-shape-icon"> New Collection</p> 
+                                                <h2 class="slider__content--maintitle h1">The Great Fashion <br>
+                                                    Collection 2022</h2>
+                                                <p class="slider__content--desc desc2 d-sm-2-none mb-40 ">Up To 40% Off Final Sale Items. <br>
+                                                    Caught in the Moment!</p>    
+                                                <a class="primary__btn slider__btn" href="shop.html">Show Collection
+                                                    <svg class="slider__btn--arrow__icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewBox="0 0 6.2 6.2">
+                                                    <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide ">
+                        <div class="hero__slider--items home1__slider--bg three">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-6 offset-lg-6">
+                                        <div class="hero__slider--items__inner">
+                                            <div class="slider__content text-center">
+                                                <p class="slider__content--desc desc1 mb-15"><img class="slider__text--shape__icon" src="assets/img/icon/text-shape-icon.png" alt="text-shape-icon"> New Collection</p> 
+                                                <h2 class="slider__content--maintitle h1">The Great Fashion <br>
+                                                    Collection 2022</h2>
+                                                <p class="slider__content--desc desc2 d-sm-2-none mb-40">Up To 40% Off Final Sale Items. <br>
+                                                    Caught in the Moment!</p>    
+                                                <a class="primary__btn slider__btn" href="shop.html">Show Collection
+                                                    <svg class="slider__btn--arrow__icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewBox="0 0 6.2 6.2">
+                                                    <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper__nav--btn swiper-button-next"></div>
+                <div class="swiper__nav--btn swiper-button-prev"></div>
+            </div>
+        </section>
+        <!-- End slider section -->
+
+
+        <!-- Start product section -->
+        <section class="product__section section--padding pt-0">
+
+            <div class="container-fluid">
+                <div class="categories mb-5">
+                    <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1">
+                      <% if (categories && categories.length > 0) { %>
+                         <% categories.forEach(category => { %>
+                          <div class="col mb-4">
+                            <div class="category-card">
+                              <div class="category-card__thumbnail">
+                                <img src="/uploads/<%= category.image  || 'https://example.com/uploads/default-category.jpg' %>" 
+                                   alt="<%= category.name || 'Category' %>" 
+                                  class="category-card__image">
+
+                              </div>
+                              
+                              <div class="category-card__content">
+                                <h3 class="category-card__title">
+                                  <%= category.name || 'Category Name' %>
+                                </h3>
+                                <p class="category-card__description">
+                                  <%= category.description || 'No description available.' %>
+                                </p>
+                                <a href="/products?category=<%= category._id %>" class="btn btn-primary">Shop Now</a>
+                              </div>
+                            </div>
+                          </div>
+                        <% }) %>
+                      <% } else { %>
+                        <p>No categories available at the moment.</p>
+                      <% } %>
+                    </div>
+                  </div>
+                  
+                <div class="tab_content">
+                    <div id="featured" class="tab_pane active show">
+                        <div class="product__section--inner">
+                            <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n30">
+                                <% if (products && products.length > 0) { %>
+                                    <% products.forEach(product => { %>
+                                    <div class="col mb-30">
+                                        <div class="product__items">
+                                            <div class="product__items--thumbnail">
+                                                <a class="product__items--link" href="/ProductDetails?id=<%= product._id %>">
+                                                    <img class="product__items--img product__primary--img" 
+                                                    src="<%= product.productImage && product.productImage[1] 
+                                                    ? product.productImage[1] 
+                                                    : '/uploads/default.jpg' %>" 
+                                              alt="<%= product.productName || 'Product' %>">
+        
+        
+                                               
+                                                </a>
+                                                <% if (product.isOnSale) { %>
+                                                    <div class="product__badge">
+                                                        <span class="product__badge--items sale">Sale</span>
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                            <div class="product__items--content">
+                                                <span class="product__items--content__subtitle"><%= product.description || 'No description available' %></span>
+                                                <h3 class="product__items--content__title h4">
+                                                    <a href="/ProductDetails?id=<%= product._id %>"><%= product.productName %></a>
+                                                </h3>
+                                                <div class="product__items--price">
+                                                    <span class="current__price">Rs:<%= product.salePrice || '0.00' %></span>
+                                                  
+                                                        <span class="old__price">Rs:<%= product.regularPrice || 'N/A' %></span>
+        
+                                                   
+                                                </div>
+                                                <ul class="rating product__rating d-flex">
+                                                    <% for (let i = 1; i <= 5; i++) { %>
+                                                        <li class="rating__list">
+                                                            <span class="rating__list--icon">
+                                                                <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="14.105" height="14.732" viewBox="0 0 10.105 9.732">
+                                                                    <path data-name="star" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
+                                                                </svg>
+                                                            </span>
+                                                        </li>
+                                                    <% } %>
+                                                </ul>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- End product section -->
+
+        
+
+        <!-- Start product section -->
+        <!-- End product section -->
+
+        <!-- Start banner section -->
+        
+        <!-- End banner section -->
+
+        
+   
+
+        <!-- Start banner section -->
+        <section class="banner__section section--padding pt-0">
+            <div class="container-fluid">
+                <div class="row row-cols-1">
+                    <div class="col">
+                        <div class="banner__section--inner position__relative">
+                            <a class="banner__items--thumbnail display-block" href="shop.html"><img class="banner__items--thumbnail__img banner__img--height__md display-block" src="assets/img/banner/banner-bg2.png" alt="banner-img">
+                                <div class="banner__content--style2">
+                                    <h2 class="banner__content--style2__title text-white">Need Winter Boots? </h2>
+                                    <p class="banner__content--style2__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam, quis nostrud exercitation </p>
+                                    <span class="primary__btn">Shop Now
+                                        <svg class="primary__btn--arrow__icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewBox="0 0 6.2 6.2">
+                                        <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End banner section -->
+
+        <!-- Start blog section -->
+       
+   
+
+      
+        <%- include("../partials/user/footer") %>
+        
+   

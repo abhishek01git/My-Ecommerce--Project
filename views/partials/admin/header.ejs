@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Nest Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="/admin/nest-backend/assets/imgs/theme/favicon.svg" />
+  <link href="/admin/nest-backend/assets/css/main.css?v=1.1" rel="stylesheet" />
+  <style>
+    .navbar-aside {
+      width: 30%;
+    }
+    .slider {
+  width: 60%; /* Decrease the width percentage */
+  max-width: 600px; /* Set a max-width to control the size */
+  margin: 0 auto; /* Center the slider */
+}
+
+  </style>
+</head>
+<body>
+  <div class="screen-overlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="navbar-aside" id="offcanvas_aside">
+    <div class="aside-top">
+      <a href="index.html" class="brand-wrap">
+        <h3>Elite-Threads</h3>
+      </a>
+      <button class="btn btn-icon btn-aside-minimize" id="minimizeSidebar" aria-label="Minimize Sidebar">
+        <i class="material-icons md-menu_open"></i>
+      </button>
+    </div>
+
+    <nav>
+      <ul class="menu-aside">
+        <li>
+          <a class="menu-link" href="/admin/dashboard">
+            <i class="icon material-icons md-home"></i>
+            <span class="text">Dashboard</span>
+          </a>
+        </li>
+        <li class="menu-item has-submenu">
+          <a class="menu-link" href="/admin/users">
+            <i class="icon material-icons md-person"></i>
+            <span class="text">Customers</span>
+          </a>
+          <div class="submenu">
+            <a href="/admin/users">Customer List</a>
+          </div>
+        </li>
+        <li class="menu-item has-submenu">
+          <a class="menu-link" href="/admin/category">
+            <i class="icon material-icons md-shopping_cart"></i>
+            <span class="text">Category</span>
+          </a>
+          <div class="submenu">
+            <a href="/admin/category">Category List</a>
+          </div>
+        </li>
+        <li class="menu-item has-submenu">
+          <a class="menu-link" href="/admin/products">
+            <i class="icon material-icons md-add_box"></i>
+            <span class="text">Products</span>
+          </a>
+          <div class="submenu">
+            <a href="/admin/addProducts">Add Product</a>
+            <a href="/admin/products">Product List</a>
+          </div>
+        </li>
+        <li class="menu-item has-submenu">
+          <a class="menu-link" href="#">
+            <i class="icon material-icons md-shopping_cart"></i>
+            <span class="text">Orders</span>
+          </a>
+          <div class="submenu">
+            <a href="/admin/orders">Order List</a>
+          </div>
+        </li>
+        <li class="menu-item">
+          <a class="menu-link" href="/admin/coupon">
+            <i class="icon material-icons md-stars"></i>
+            <span class="text">Coupon</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a class="menu-link disabled" href="/admin/reports">
+            <i class="icon material-icons md-pie_chart"></i>
+            <span class="text">Sales Report </span>
+          </a>
+        </li>
+        <li class="menu-item has-submenu">
+          <a class="menu-link" href="#">
+            <i class="icon material-icons md-settings"></i>
+            <span class="text">Settings</span>
+          </a>
+          <div class="submenu">
+            <a href="page-settings-1.html">General Settings</a>
+            <a href="page-settings-2.html">User Settings</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content" style="margin-left: 30%;">
+    <div class="container">
+      <h1>Welcome to Elite-Threads Dashboard</h1>
+    </div>
+  </main>
+
+  <script src="/admin/nest-backend/assets/js/main.js"></script>
+  <script>
+    // JS to toggle sidebar
+    document.getElementById('minimizeSidebar').addEventListener('click', function() {
+      document.querySelector('.navbar-aside').classList.toggle('collapsed');
+    });
+  </script>
+</body>
+</html>

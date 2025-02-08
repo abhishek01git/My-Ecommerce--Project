@@ -1,0 +1,311 @@
+
+<%- include("../../views/partials/admin/header") %>
+<!DOCTYPE html>
+<html lang="en">
+   
+
+<style>
+    .table-responsive {
+    overflow-x: auto; /* Enables horizontal scrolling for larger tables */
+}
+
+.table {
+    width: 100%; /* Ensures the table takes full width */
+    table-layout: fixed; /* Prevents columns from adjusting their width */
+}
+
+.table th,
+.table td {
+    padding: 12px; /* Padding for cells to provide spacing */
+    vertical-align: middle; /* Align text and image vertically */
+}
+
+.table th {
+    text-align: left; /* Align column headers to the left */
+}
+
+.table img.img-xs {
+    width: 80px; /* Product image size */
+    height: 80px; /* Product image size */
+    object-fit: cover; /* Ensure image is fully covered */
+}
+
+</style>
+
+<section class="content-main" style="margin-left: 20%;">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Order Detail</h2>
+            <p>Details for Order ID: <%= order._id %></p>
+        </div>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
+                    <span><i class="material-icons md-calendar_today"></i> <b><%= order.createdAt.toDateString() %>, <%= order.createdAt.toTimeString() %></b></span> <br />
+                    <small class="text-muted">Order ID: <%= order._id %></small>
+                </div>
+                <div class="col-lg-2 col-md-2 ms-auto text-md-end">
+                    <select 
+                    name="status" 
+                    id="order-status" 
+                    onchange="return orderStatus(event, '<%= order._id %>')" 
+                    class="form-select form-select-sm"
+                    <%= (order.status === 'Delivered' || order.status === 'Cancelled') ? 'disabled' : '' %>>
+                    <option value="Pending" <%= order.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                    <option value="Shipped" <%= order.status === 'Shipped' ? 'selected' : '' %>>Shipped</option>
+                    <option value="Delivered" <%= order.status === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+                    <option value="canceled" <%= order.status === 'canceled' ? 'selected' : '' %>>Cancelled</option>
+                </select>
+                    <br>         
+                    <a class="btn btn-secondary print ms-2" href="#"><i class="icon material-icons md-print"></i></a>
+                </div>
+            </div>
+        </header>
+        <div class="card-body">
+            <div class="row mb-50 mt-20 order-info-wrap">
+                <div class="col-md-4">
+                    <article class="icontext align-items-start">
+                        <span class="icon icon-sm rounded-circle bg-primary-light">
+                            <i class="text-primary material-icons md-person"></i>
+                        </span>
+                        <div class="text">
+                            <h6 class="mb-1">Customer</h6>
+                            <p class="mb-1">
+                                <%= order.userId.name %> <br />
+                                <%= order.userId.email %> <br />
+                                <%= order.userId.phone %>
+                            </p>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="icontext align-items-start">
+                        <span class="icon icon-sm rounded-circle bg-primary-light">
+                            <i class="text-primary material-icons md-local_shipping"></i>
+                        </span>
+                        <div class="text">
+                            <h6 class="mb-1">Order Info</h6>
+                            <p class="mb-1">
+                                Shipping: <%= order.shippingProvider %> <br />
+                                Pay method: <%= order.paymentMethod %> <br />
+                            </p>
+                            <p id="order-status-cont">Status: <%= order.status %></p>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="icontext align-items-start">
+                        <span class="icon icon-sm rounded-circle bg-primary-light">
+                            <i class="text-primary material-icons md-place"></i>
+                        </span>
+                        <div class="text">
+                            <h6 class="mb-1">Deliver to</h6>
+                            <p class="mb-1">
+                                City: <%= order.address.state %>, <%= order.address.city %> <br />
+                                <%= order.address.landmark %>, <%= order.address.pincode %> <br />
+                                Phone: <%= order.address.phone %>
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-7" style="margin-left: 15%;">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th width="40%">Product</th>
+                                    <th width="20%">Unit Price</th>
+                                    <th width="20%">Quantity</th>
+                                    <th width="20%" class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% order.items.forEach(item => { %>
+                                    <tr>
+                                        <td>
+                                            <a class="itemside" href="#">
+                                                <div class="left">
+                                                    <img src="<%= item.image %>" width="60" height="60" class="img-sm" alt="Item" />
+                                                </div>
+                                                <div class="info"><%= item.productName %></div>
+                                            </a>
+                                        </td>
+                                        <td>$<%= item.price.toFixed(2) %></td>
+                                        <td><%= item.quantity %></td>
+                                        <td class="text-end">$<%= (item.price * item.quantity).toFixed(2) %></td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-1"></div>
+                <div class="col-lg-4" style="margin-left: 70%;">
+                    <% if (order.items.some(item => item.returnStatus === 'Requested')) { %>
+                        <div class="alert alert-warning mt-3">
+                            <h6>Return Request Pending</h6>
+                            <p>Some items in this order have a return request. Please review them.</p>
+                            <button 
+                                class="btn btn-primary" 
+                                onclick="approveReturn('<%= order._id %>')">
+                                Approve Return
+                            </button>
+                        </div>
+                    <% } %>
+                </div>
+                
+                    <!-- Add additional content if needed -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+           <!-- content-main end// -->
+            <footer class="main-footer font-xs">
+                <div class="row pb-30 pt-15">
+                    <div class="col-sm-6">
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        &copy; Nest - HTML Ecommerce Template .
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end">All rights reserved</div>
+                    </div>
+                </div>
+            </footer>
+        </main>
+        <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
+        <script src="assets/js/vendors/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/vendors/select2.min.js"></script>
+        <script src="assets/js/vendors/perfect-scrollbar.js"></script>
+        <script src="assets/js/vendors/jquery.fullscreen.min.js"></script>
+        <!-- Main Script -->
+        <script src="assets/js/main.js?v=1.1" type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    </body>
+</html>
+
+<script>
+
+    
+function orderStatus(event, orderId) {
+    event.preventDefault();
+
+    
+    const orderStatus = document.getElementById('order-status').value;
+
+    fetch(`/admin/orders/update-status?id=${orderId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            orderStatus,
+        }),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                if (response.status === 403) {
+                    // Handle the forbidden status for immutable states
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Action Not Allowed',
+                        text: 'The status cannot be updated as it is already set to Delivered or Cancelled.',
+                        confirmButtonText: 'OK',
+                    });
+                } else {
+                    throw new Error(`Error: ${response.status}`);
+                }
+                return;
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (data && data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Order status updated successfully!',
+                    confirmButtonText: 'OK',
+                }).then(() => {
+                    // Update the UI to reflect the new status
+                    document.getElementById('order-status-cont').innerHTML = `Status: ${data.newStatus}`;
+                });
+            } else if (data && !data.success) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed',
+                    text: data.message || 'Failed to update order status. Please try again.',
+                    confirmButtonText: 'OK',
+                });
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'An unexpected error occurred. Please try again later.',
+                confirmButtonText: 'OK',
+            });
+        });
+}
+ 
+
+ 
+function approveReturn(orderId) {
+    console.log(orderId);
+    
+    fetch(`/admin/orders/${orderId}/approve-return`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => {
+            console.log("cfvgbhnjm",response);
+            
+            if (!response.ok) {
+                return response.text().then((text) => {
+                    throw new Error(`Server error: ${text}`);
+                });
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+            
+            alert('Return approved successfully!');
+            location.reload(); // Refresh the page to reflect changes
+        })
+        .catch((error) => {
+            console.error('Error approving return:', error);
+            alert('Failed to approve the return. Please try again.');
+        });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+

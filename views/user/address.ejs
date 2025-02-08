@@ -1,0 +1,53 @@
+<%- include("../partials/user/header") %>
+
+<!doctype html>
+
+<section class="my__account--section section--padding">
+    <div class="container">
+        <div class="my__account--section__inner border-radius-10 d-flex">
+            <div class="account__wrapper">
+                <div class="account__content">
+                    <h3 class="account__content--title mb-20">Addresses</h3>
+                    <a href="/add-address" class="new__address--btn primary__btn mb-25">Add a new address</a>
+ 
+                    <!-- Grid for displaying addresses -->
+                    <div class="row">
+                        <br>
+                       
+                        <% addresses.forEach(function(addressDoc) { %>
+                            <% addressDoc.address.forEach(function(address, index) { %>
+                                <div class="col-md-3 mb-3">
+                                    <div class="account__details two">
+                                        <h4 class="account__details--title"><strong>Type:</strong><%= address.addressType %></h4>
+                                        <p class="account__details--desc">
+                                            <strong>Name:</strong> <%= address.name %><br>
+                                            <strong>City:</strong> <%= address.city %><br>
+                                            <strong>Landmark:</strong> <%= address.landmark %><br>
+                                            <strong>State:</strong> <%= address.state %><br>
+                                            <strong>Pincode:</strong> <%= address.pincode %><br>
+                                            <strong>Phone:</strong> <%= address.phone %><br>
+                                            
+                                        </p>
+                                        <a class="account__details--link" href="/edit-address/<%= address._id %>">View Address</a>
+                                    </div>
+                                    <div class="account__details--footer d-flex">
+                                        <a href="/edit-address/<%= address._id %>" class="account__details--footer__btn">Edit</a>
+                                        <form action="/deleteAddress/<%= address._id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this address?');">
+                                            <input type="hidden" name="id" value="<%= address._id %>">
+                                            <button type="submit" class="account__details--footer__btn">Delete</button>
+                                            <hr>
+                                        </form>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include("../partials/user/footer") %>
+</html>
+

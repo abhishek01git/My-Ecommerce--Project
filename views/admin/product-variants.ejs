@@ -1,0 +1,150 @@
+<%- include("../../views/partials/admin/header") %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Variants</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Center the form on the page */
+        .form-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading Styles */
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        .form-control:focus {
+            border-color: #66afe9;
+            outline: none;
+            background-color: #fff;
+        }
+
+        .form-control[type="file"] {
+            padding: 5px;
+            background-color: #f4f7fc;
+        }
+
+        /* Button Styles */
+        .btn {
+            background-color: #4caf75;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .form-control {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Product Variants</h2>
+        <form action="/admin/product-variants" method="POST" enctype="multipart/form-data">
+            <table width="100%">
+                <tr>
+                    <td><label for="productName">Product Name</label></td>
+                    <td><input type="text" class="form-control" id="productName" name="productName"
+                               value="<%= productName || 'hello' %>" placeholder="Enter product name" required></td>
+                </tr>
+                
+                <tr>
+                    <td><label for="category">Category</label></td>
+                    <td>
+                        <input type="text" class="form-control" id="productName" name="productName"
+                               value="<%=product.category.name %>" placeholder="Enter product name" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="sizeS">Size S Quantity</label></td>
+                    <td><input type="number" class="form-control" id="sizeS" name="size[S]" min="0" value="<%= sizes['S'] || 0 %>"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="sizeM">Size M Quantity</label></td>
+                    <td><input type="number" class="form-control" id="sizeM" name="size[M]" min="0" value="<%= sizes['M'] || 0 %>"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="sizeL">Size L Quantity</label></td>
+                    <td><input type="number" class="form-control" id="sizeL" name="size[L]" min="0" value="<%= sizes['L'] || 0 %>"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="sizeXL">Size XL Quantity</label></td>
+                    <td><input type="number" class="form-control" id="sizeXL" name="size[XL]" min="0" value="<%= sizes['XL'] || 0 %>"></td>
+                </tr>
+            </table>
+
+            <button type="submit" class="btn">Close</button>
+        </form>
+    </div>
+
+</body>
+</html>
+
+<%- include("../../views/partials/admin/footer") %>
