@@ -14,7 +14,6 @@ const dotenv = require('dotenv');
 const Wallet=require('../../models/WalletSchemma')
 dotenv.config();
 
-
 const renderCheckoutPage = async (req, res) => {
   try {
     const userId = req.session.user;
@@ -23,31 +22,29 @@ const renderCheckoutPage = async (req, res) => {
     const cart = await Cart.findOne({ userId }).populate("items.productId");
     console.log("Cart:", cart);
 
-
-    if(!cart||cart.items.length===0){
-      return res.redirect('/cart')
+    if (!cart || cart.items.length === 0) {
+      return res.redirect('/cart');
     }
-    
 
-
-  const totalAmount = cart.totalAmount;
-
-    console.log("total ###amound".totalAmount);
-    
-
+    const totalAmount = cart.totalAmount;
+    console.log("Total Amount:", totalAmount);
 
     const addresses = await Address.find({ userId });
     console.log("User Addresses:", addresses);
 
+    // Fetch Wallet Balance
+    const wallet = await Wallet.findOne({ userId });
+    const walletBalance = wallet ? wallet.balance.toFixed(2):"0.00";
+    console.log("Wallet Balance:", walletBalance);
 
-
-
-    res.render("checkout", { cart, addresses, totalAmount });
+    // Pass wallet balance to the checkout page
+    res.render("checkout", { cart, addresses, totalAmount, walletBalance });
   } catch (error) {
     console.error("Error rendering checkout page:", error);
     res.status(500).send("An error occurred.");
   }
 };
+
 
 const saveNewAddress = async (req, res) => {
   try {
