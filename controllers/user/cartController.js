@@ -56,10 +56,10 @@ const addToCart = async (req, res) => {
       effectiveOffer
     );
 
-    const offerPrice = (product.regularPrice * effectiveOffer) / 100;
+    const offerPrice = (product.salePrice * effectiveOffer) / 100;
     console.log("Offer Price: ", offerPrice);
 
-    const finalPrice = product.regularPrice - offerPrice;
+    const finalPrice = product.salePrice - offerPrice;
     console.log("Final Price after offer: ", finalPrice);
 
     let cart = await Cart.findOne({ userId });
@@ -96,7 +96,7 @@ const addToCart = async (req, res) => {
         size,
         quantity,
         productName: product.productName,
-        price: finalPrice,
+        price: finalPrice.toFixed(2),
         image: product.productImage[0],
       });
     }
@@ -168,9 +168,11 @@ const viewCart = async (req, res) => {
         );
 
         totalAmount += item.quantity * finalPrice;
-        console.log("totalAmount", totalAmount);
       }
     });
+
+    // Convert totalAmount to 2 decimal places properly
+    totalAmount = parseFloat(totalAmount.toFixed(2));
 
     console.log(`[viewCart]: Total amount for user ${userId}: ${totalAmount}`);
 

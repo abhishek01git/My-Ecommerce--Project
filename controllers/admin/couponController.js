@@ -2,6 +2,8 @@ const { default: mongoose } = require('mongoose');
 const Coupon = require('../../models/couponSchema');
 
 const loadCoupon = async (req, res) => {
+  
+  
   try {
       
       let page = parseInt(req.query.page) || 1;
@@ -35,13 +37,14 @@ const loadCoupon = async (req, res) => {
 const createCoupon = async (req, res) => {
   try {
       
-      const existingCoupons = await Coupon.find({}, 'name'); 
-      const existingCouponNames = existingCoupons.map(coupon => coupon.name); 
-
-      
-      if (existingCouponNames.includes(req.body.couponName)) {
-      return  res.json({ success: true, message: "Coupon exist" });
-      }
+      const existingCoupons = await Coupon.find({}, 'name');       
+      if (existingCoupons) {
+        return res.status(400).json({ 
+            success: false, 
+            message: "Coupon already exists!" 
+        });
+    }
+    
 
       const data = {
           couponName: req.body.couponName,

@@ -361,14 +361,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 method: "POST",
                 body: formData,
             });
+            console.log('formData',formData);
+            
 
             const data = await response.json();
+            console.log("dataids",data);
+            
 
-            if (!response.ok) {
+            if (!response.ok && !response.success) {
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: data.message, // Show error from backend
+                    text: data.message, 
                 });
             } else {
                 Swal.fire({
@@ -377,7 +381,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     text: "Your coupon has been added successfully.",
                     confirmButtonText: "OK",
                 }).then(() => {
-                    window.location.reload(); // Reload the page to update the coupon list
+                    window.location.reload(); 
                 });
             }
         } catch (error) {
@@ -397,6 +401,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
  
+
+
+
+
 
 
 

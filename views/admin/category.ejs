@@ -65,6 +65,36 @@
     .error-message {
       color: red;
     }
+    .pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.pagination-container a {
+  text-decoration: none;
+  color: #007bff;
+  padding: 8px 12px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.pagination-container a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination-container .current-page {
+  padding: 8px 12px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border-radius: 5px;
+}
+
   </style>
 </head>
 <body>
@@ -208,9 +238,14 @@
   </section>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+
+
+  
+
+
   <script>
-
-
    function handleFormSubmit(event) {
   event.preventDefault();
   

@@ -40,31 +40,33 @@ const productDetails = async (req, res,next) => {
     const categoryOffer = product.category?.categoryOffer || 0; 
     const productOffer = product.productOffer || 0; 
     const effectiveOffer = Math.max(categoryOffer, productOffer); 
+    const salePrice = product.salePrice - (product.salePrice * effectiveOffer) / 100;
+
 
     
     console.log("Category Offer:", categoryOffer);
     console.log("Product Offer:", productOffer);
     console.log("Effective Offer:", effectiveOffer);
+    console.log(" SalePrice:", salePrice);
 
    
-    const offerPrice = (product.regularPrice * effectiveOffer) / 100; 
-    const salePrice = product.regularPrice - offerPrice; 
+    
 
     
-    console.log("Offer Price Calculation:", product.regularPrice, "*", effectiveOffer, "/", 100, "=", offerPrice);
-    console.log("Sale Price Calculation:", product.regularPrice, "-", offerPrice, "=", salePrice);
+    // console.log("Offer Price Calculation:", product.regularPrice, "*", effectiveOffer, "/", 100, "=", offerPrice);
+    // console.log("Sale Price Calculation:", product.regularPrice, "-", offerPrice, "=", salePrice);
 
   
     const formattedSalePrice = salePrice.toFixed(2);
-    const formattedOfferPrice = offerPrice.toFixed(2);
+    // const formattedOfferPrice = offerPrice.toFixed(2);
 
     
     const offerPercentage = `${effectiveOffer}% OFF`;
 
     
     console.log("Formatted Sale Price:", formattedSalePrice);
-    console.log("Formatted Offer Price:", formattedOfferPrice);
-    console.log("Offer Percentage:", offerPercentage);
+    // console.log("Formatted Offer Price:", formattedOfferPrice);
+    // console.log("Offer Percentage:", offerPercentage);
 
     const variantsWithStock = product.variant.map((variant) => ({
       size: variant.size,
@@ -86,7 +88,7 @@ const productDetails = async (req, res,next) => {
       relatedProducts,
       effectiveOffer, 
       salePrice: formattedSalePrice, 
-      offerPrice: formattedOfferPrice, 
+      // offerPrice: formattedOfferPrice, 
       offerPercentage, 
     });
   } catch (error) {
@@ -162,7 +164,7 @@ const shopLoad = async (req, res) => {
         const categoryOffer = product.category?.categoryOffer || 0;
         const productOffer = product.productOffer || 0;
         const effectiveOffer = Math.max(categoryOffer, productOffer);
-        const salePrice = product.regularPrice - (product.regularPrice * effectiveOffer) / 100;
+        const salePrice = product.salePrice - (product.salePrice * effectiveOffer) / 100;
 
         return {
           ...product._doc,

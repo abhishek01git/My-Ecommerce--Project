@@ -180,7 +180,7 @@ const getAllProducts = async (req, res) => {
         const effectiveOffer = Math.max(categoryOffer, productOffer); 
 
         
-        const salePrice = product.regularPrice - (product.regularPrice * effectiveOffer) / 100;
+        const salePrice = product.salePrice - (product.salePrice * effectiveOffer) / 100;
 
         return {
           ...product._doc, 
