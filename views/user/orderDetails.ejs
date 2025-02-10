@@ -174,7 +174,7 @@
             </tr>
             <tr>
                 <th>Total Amount</th>
-                <td>$<%= order.totalAmount %></td>
+                <td>₹<%= order.totalAmount %></td>
             </tr>
         </table>
 
@@ -214,7 +214,7 @@
                 <img src="<%= item.image %>" alt="<%= item.productId.name %>">
                 <div>
                     <p><strong><%= item.productId.name %> (Size: <%= item.size %>)</strong></p>
-                    <p>Quantity: <%= item.quantity %> | Price: $<%= item.price.toFixed(2) %></p>
+                    <p>Quantity: <%= item.quantity %> | Price: ₹<%= item.price.toFixed(2) %></p>
                 </div>
             </div>
            

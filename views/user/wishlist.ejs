@@ -67,7 +67,7 @@
                                                 </div>
                                             </td>
                                             <td class="cart__table--body__list">
-                                                <span class="cart__price">Rs:<%= item.productId.regularPrice %></span>
+                                                <span class="cart__price">₹<%= item.productId.regularPrice %></span>
                                             </td>
                                             <td class="cart__table--body__list text-right">
                                                 <a class="wishlist__cart--btn primary__btn" href="/ProductDetails?id=<%= item.productId._id %>">Shop Now</a>
@@ -80,8 +80,8 @@
                                 </tbody>
                             </table> 
                             <div class="continue__shopping d-flex justify-content-between">
-                                <a class="continue__shopping--link" href="index.html">Continue shopping</a>
-                                <a class="continue__shopping--clear" href="shop.html">View All Products</a>
+                                <a class="continue__shopping--link" href="/shop">Continue shopping</a>
+                                
                             </div>
                         </div> 
                     </form> 

@@ -94,7 +94,7 @@
                                                         <span id="size<%= i %>" class="cart__price"><%= cartItems[i].size %></span>
                                                     </td>
                                                     <td class="cart__table--body__list">
-                                                        <span class="cart__price"><%= cartItems[i].price %></span>
+                                                        <span class="cart__price">₹<%= cartItems[i].price %></span>
                                                     </td>
                                                     <td class="cart__table--body__list">
                                                         <div class="quantity__box">
@@ -111,7 +111,7 @@
                                                         
                                                     </td>
                                                     <td class="cart__table--body__list">
-                                                        <span id="item-price<%= i %>" class="cart__price end"><%= totalAmount %></span>
+                                                        <span id="item-price<%= i %>" class="cart__price end">₹<%= totalAmount %></span>
                                                     </td>
                                                 </tr>
                                             <% } %>
@@ -120,8 +120,8 @@
                                         </tbody>
                                     </table> 
                                     <div class="continue__shopping d-flex justify-content-between">
-                                        <a class="continue__shopping--link" href="shop.html">Continue shopping</a>
-                                        <button class="continue__shopping--clear" type="submit">Clear Cart</button>
+                                        <a class="continue__shopping--link" href="/shop">Continue shopping</a>
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                                                  
                                                 <tr class="cart__summary--total__list">
                                                     <td class="cart__summary--total__title text-left">GRAND TOTAL</td>
-                                                    <td id="grand-total" class="cart__summary--total__amount text-right"><%= grandTotal %></td>
+                                                    <td id="grand-total" class="cart__summary--total__amount text-right" style="font-size: large;">₹<%= grandTotal %></td>
                                                 </tr>
                                                 
                                             </tbody>
@@ -145,7 +145,7 @@
                                     <div class="cart__summary--footer">
                                         <p class="cart__summary--footer__desc">Shipping & taxes calculated at checkout</p>
                                         <ul class="d-flex justify-content-between">
-                                            <li><button class="cart__summary--footer__btn primary__btn cart" type="submit">Update Cart</button></li>
+                                          
                                             <li><a class="cart__summary--footer__btn primary__btn checkout" href="/checkout">Check Out</a></li>
 
                                         </ul>
@@ -248,8 +248,8 @@ async function updateQuantity(event, button, action, maxQuantity, index) {
         let result = await response.json();
 
         if (result.success) {
-            document.getElementById(`item-price${index}`).textContent = result.totalAmount;
-            document.getElementById('grand-total').innerHTML = result.grandTotal;
+            document.getElementById(`item-price${index}`).textContent = `₹${result.totalAmount}`;
+            document.getElementById('grand-total').innerHTML = `₹${result.grandTotal}`;
         } else {
             if (result.availableQuantity) {
                 Swal.fire({
@@ -258,10 +258,10 @@ async function updateQuantity(event, button, action, maxQuantity, index) {
                     text: `Only ${result.availableQuantity} units are available for size ${size}. Updating your cart...`,
                 });
 
-                // Update the cart with available quantity
+                
                 quantityInput.value = result.availableQuantity;
 
-                // Send another request to save the correct quantity
+                
                 response = await fetch(`/cart/update/${productId}`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
@@ -271,8 +271,8 @@ async function updateQuantity(event, button, action, maxQuantity, index) {
                 let updatedResult = await response.json();
 
                 if (updatedResult.success) {
-                    document.getElementById(`item-price${index}`).textContent = updatedResult.totalAmount;
-                    document.getElementById('grand-total').innerHTML = updatedResult.grandTotal;
+                    document.getElementById(`item-price${index}`).textContent = `₹${updatedResult.totalAmount}`;
+                    document.getElementById('grand-total').innerHTML = `₹${updatedResult.grandTotal}`;
                 }
             } else {
                 Swal.fire({

@@ -25,7 +25,7 @@
 }
 
 .continue__shipping--btn {
-    background-color: #007bff;
+    background-color: #a5abb1;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -96,7 +96,7 @@
 }
 
 .custom-control-input:checked + .custom-control-label {
-    background-color: #007bff; /* Highlight selected address */
+    background-color: #808080; /* Highlight selected address */
     color: white; /* Change text color for readability */
     border-color: #007bff;
     box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
@@ -108,7 +108,7 @@
 
 .card-text {
     font-size: 14px;
-    color: #555;
+    color: #dad1d1;
     line-height: 1.6;
 }
 
@@ -414,7 +414,7 @@
                         <nav>
                             <ol class="breadcrumb checkout__breadcrumb d-flex">
                                 <li class="breadcrumb__item breadcrumb__item--completed d-flex align-items-center">
-                                    <a class="breadcrumb__link" href="cart.html">Cart</a>
+                                    <a class="breadcrumb__link" href="/cart">Cart</a>
                                     <svg class="readcrumb__chevron-icon" xmlns="http://www.w3.org/2000/svg" width="17.007" height="16.831" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"></path></svg>
                                 </li>
                         
@@ -435,7 +435,7 @@
                     <main class="main__content_wrapper">
                         <form id="placeOrderForm" action="/checkout/add-address" method="POST">
                             <!-- Add Address Button -->
-                            <button id="add-address-btn" class="btn btn-primary mt-4" >Add New Address</button>
+                            <button id="add-address-btn" class="btn btn-primary mt-4" style="background-color: #d70c64;" >Add New Address</button>
                         
                             <!-- New Address Form (Initially hidden) -->
                             <div id="new-address-form" class="d-none mt-4">
@@ -650,7 +650,7 @@
                             <tbody class="checkout__total--body">
                                 <tr class="checkout__total--items">
                                     <td class="checkout__total--title text-left">Shipping</td>
-                                    <td class="checkout__total--amount text-right">Rs:0.00</td>
+                                    <td class="checkout__total--amount text-right"> 0.00</td>
                                 </tr>
                                 <tr class="checkout__total--items">
                                     <td class="checkout__total--title text-left">Payment Method</td>
@@ -665,11 +665,11 @@
                                 <!-- Add Discount Amount and Final Amount -->
                                 <tr id="discount-row" class="checkout__total--items" style="display:none;">
                                     <td class="checkout__total--title text-left">Discount</td>
-                                    <td id="discount-amount" class="checkout__total--amount text-right">£0.00</td>
+                                    <td id="discount-amount" class="checkout__total--amount text-right">₹ 0.00</td>
                                 </tr>
                                 <tr id="final-total-row" class="checkout__total--items" style="display:none;">
                                     <td class="checkout__total--title text-left">Final Total</td>
-                                    <td id="final-total" class="checkout__total--amount text-right">£0.00</td>
+                                    <td id="final-total" class="checkout__total--amount text-right">₹ 0.00</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -706,6 +706,9 @@
 <!-- Mirrored from risingtheme.com/html/demo-suruchi-v1/suruchi/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 23 Nov 2024 05:25:38 GMT -->
 </html>
 <script>
+
+
+
 
 
 
@@ -832,8 +835,8 @@ const displayCoupons = (coupons) => {
     couponElement.classList.add('coupon__item');
     couponElement.innerHTML = `
       <h4 class="coupon__code">${coupon.name}</h4>
-      <span class="coupon__discount">Discount: $${coupon.offerPrice}</span>
-      <p class="minimum_purchase">Min Purchase: $${coupon.minimumPrice}</p>
+      <span class="coupon__discount">Discount:₹ ${coupon.offerPrice}</span>
+      <p class="minimum_purchase">Min Purchase:₹ ${coupon.minimumPrice}</p>
       <p class="coupon__validity">
         Valid from: ${new Date(coupon.createdOn).toLocaleDateString()} 
         - Expires on: ${new Date(coupon.expireOn).toLocaleDateString()}
@@ -896,7 +899,7 @@ document.getElementById("applyCouponForm").addEventListener("submit", async func
 
             // Update the feedback message
             document.getElementById("couponFeedback").innerHTML = `
-                <p style="color: green;">Coupon applied! Discount: ${discount.toFixed(2)}. Final total: ${finalTotal.toFixed(2)}</p>
+                <p style="color: green;">Coupon applied! Discount:₹ ${discount.toFixed(2)}. Final total:₹ ${finalTotal.toFixed(2)}</p>
             `;
 
             // Show discount row and final total row
@@ -904,11 +907,11 @@ document.getElementById("applyCouponForm").addEventListener("submit", async func
             document.getElementById("final-total-row").style.display = "table-row";
 
             // Update the discount and final total amounts
-            document.getElementById("discount-amount").innerHTML = `${discount.toFixed(2)}`;
-            document.getElementById("final-total").innerHTML = `${finalTotal.toFixed(2)}`;
+            document.getElementById("discount-amount").innerHTML = `₹${discount.toFixed(2)}`;
+            document.getElementById("final-total").innerHTML = `₹${finalTotal.toFixed(2)}`;
 
             // Update the total amount to reflect the new value after discount
-            document.getElementById('total-amound').innerHTML = `${totalAmount.toFixed(2)}`;
+            document.getElementById('total-amound').innerHTML = `₹${totalAmount.toFixed(2)}`;
         } else {
             // If there's an error (e.g., invalid coupon, expired, etc.)
             document.getElementById("couponFeedback").innerHTML = `

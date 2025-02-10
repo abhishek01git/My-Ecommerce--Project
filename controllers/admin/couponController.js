@@ -36,44 +36,44 @@ const loadCoupon = async (req, res) => {
      
 const createCoupon = async (req, res) => {
   try {
-      
-      const existingCoupons = await Coupon.find({}, 'name');       
-      if (existingCoupons) {
-        return res.status(400).json({ 
-            success: false, 
-            message: "Coupon already exists!" 
-        });
+    const { couponName, startDate, endDate, offerPrice, minimumPrice } = req.body;
+
+    // Check if the coupon name already exists
+    const existingCoupon = await Coupon.findOne({ name: couponName });
+    if (existingCoupon) {
+      return res.json({ success: false, message: "Coupon name already exists" });
     }
-    
 
-      const data = {
-          couponName: req.body.couponName,
-          startDate: new Date(req.body.startDate + "T00:00:00"),
-          endDate: new Date(req.body.endDate + "T00:00:00"), 
-          offerPrice: parseFloat(req.body.offerPrice), 
-          minimumPrice: parseInt(req.body.minimumPrice),
-         
-      };
+    // Prepare the coupon data
+    const data = {
+      couponName,
+      startDate: new Date(startDate + "T00:00:00"),
+      endDate: new Date(endDate + "T00:00:00"),
+      offerPrice: parseFloat(offerPrice),
+      minimumPrice: parseInt(minimumPrice),
+    };
 
-      console.log("Coupon Data:", data);
+    console.log("Coupon Data:", data);
 
-      const newCoupon = new Coupon({
-          name: data.couponName,
-          createdOn: data.startDate,
-          expireOn: data.endDate,
-          offerPrice: data.offerPrice,
-          minimumPrice: data.minimumPrice,
-          isActive: new Date() >= data.startDate,
-      });
+    // Create the new coupon
+    const newCoupon = new Coupon({
+      name: data.couponName,
+      createdOn: data.startDate,
+      expireOn: data.endDate,
+      offerPrice: data.offerPrice,
+      minimumPrice: data.minimumPrice,
+      isActive: new Date() >= data.startDate,
+    });
 
-      console.log("newcoupon", newCoupon);
+    console.log("newcoupon", newCoupon);
 
-      await newCoupon.save();
+    // Save the new coupon to the database
+    await newCoupon.save();
 
-      return res.redirect('/admin/coupon');
+    return res.redirect('/admin/coupon');
   } catch (error) {
-      console.error(error);
-      res.redirect("/PageError");
+    console.error(error);
+    return res.redirect("/PageError");
   }
 };
 
